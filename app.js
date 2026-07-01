@@ -15,6 +15,9 @@
     note: ""   // 例: "https://note.com/＜アカウント＞"
   };
 
+  // シェア時にカードに載せる、このアプリ自身の公開URL（OGP大カードが出る）。
+  var APP_URL = "https://issuenuts.github.io/web-uranai/";
+
   var cards = window.TAROT_CARDS || [];
 
   var els = {
@@ -32,6 +35,7 @@
     push: document.getElementById("r-push"),
     step: document.getElementById("r-step"),
     againBtn: document.getElementById("again-btn"),
+    shareXBtn: document.getElementById("share-x-btn"),
     copyBtn: document.getElementById("copy-btn"),
     copyNote: document.getElementById("copy-note"),
     linkX: document.getElementById("link-x"),
@@ -149,7 +153,17 @@
     }
   }
 
+  // X のシェア画面をひらく（結果テキスト＋このアプリのURL）。投稿するかは本人が決める。
+  function onShareX() {
+    var text = els.copyBtn.dataset.share || "";
+    if (!text) return;
+    var url = "https://twitter.com/intent/tweet?text=" +
+      encodeURIComponent(text + "\n") + "&url=" + encodeURIComponent(APP_URL);
+    window.open(url, "_blank", "noopener");
+  }
+
   els.drawBtn.addEventListener("click", onDraw);
   els.againBtn.addEventListener("click", onDraw);
+  els.shareXBtn.addEventListener("click", onShareX);
   els.copyBtn.addEventListener("click", onCopy);
 })();
