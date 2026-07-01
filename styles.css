@@ -1,0 +1,306 @@
+/* 「今日の一歩」ワンオラクル — スタイル
+   星を読むように先を照らす、静かで穏やかな夜空のトーン。 */
+
+:root {
+  --bg: #0e1130;
+  --bg-soft: #181c44;
+  --panel: #1f2350;
+  --panel-line: #343a73;
+  --ink: #eef0ff;
+  --ink-soft: #b9bee6;
+  --ink-faint: #8a90c4;
+  --accent: #f4c95d;      /* 星の金 */
+  --accent-soft: #f7dd9a;
+  --link: #9ec2ff;
+  --radius: 16px;
+  --maxw: 640px;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", system-ui, sans-serif;
+  color: var(--ink);
+  line-height: 1.8;
+  background:
+    radial-gradient(1200px 600px at 50% -10%, #2a2f6b 0%, rgba(42,47,107,0) 60%),
+    var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 微かな星のきらめき */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,0.8), transparent),
+    radial-gradient(1px 1px at 70% 20%, rgba(255,255,255,0.6), transparent),
+    radial-gradient(1px 1px at 40% 70%, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1px 1px at 85% 60%, rgba(255,255,255,0.6), transparent),
+    radial-gradient(1px 1px at 10% 85%, rgba(255,255,255,0.5), transparent);
+  opacity: 0.7;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+}
+.skip-link:focus {
+  left: 16px;
+  top: 16px;
+  background: var(--accent);
+  color: #1a1a1a;
+  padding: 8px 12px;
+  border-radius: 8px;
+  z-index: 10;
+}
+
+.site-header,
+main,
+.site-footer {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 20px;
+  position: relative;
+}
+
+.site-header {
+  text-align: center;
+  padding-top: 40px;
+  padding-bottom: 8px;
+}
+
+.kicker {
+  color: var(--accent-soft);
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  margin: 0 0 8px;
+}
+
+h1 {
+  font-size: 2rem;
+  margin: 0 0 4px;
+  letter-spacing: 0.04em;
+}
+h1 .sub {
+  display: inline-block;
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+  font-weight: 500;
+  margin-left: 6px;
+}
+
+.lead {
+  color: var(--ink-soft);
+  margin: 12px 0 24px;
+}
+.lead strong { color: var(--accent-soft); font-weight: 600; }
+
+.card-panel {
+  background: linear-gradient(180deg, var(--panel) 0%, var(--bg-soft) 100%);
+  border: 1px solid var(--panel-line);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin: 16px 0;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.35);
+}
+
+.field-label {
+  display: block;
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+  margin-bottom: 8px;
+}
+
+#worry {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 1rem;
+  color: var(--ink);
+  background: #12153a;
+  border: 1px solid var(--panel-line);
+  border-radius: 10px;
+  margin-bottom: 16px;
+}
+#worry::placeholder { color: var(--ink-faint); }
+#worry:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.primary-btn {
+  width: 100%;
+  padding: 14px 18px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #2a1f00;
+  background: linear-gradient(180deg, var(--accent-soft), var(--accent));
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.08s ease, filter 0.2s ease;
+}
+.primary-btn:hover { filter: brightness(1.05); }
+.primary-btn:active { transform: translateY(1px); }
+
+.how {
+  font-size: 0.78rem;
+  color: var(--ink-faint);
+  margin: 14px 0 0;
+  text-align: center;
+}
+
+/* 結果 */
+.result { animation: fadein 0.4s ease; }
+@keyframes fadein {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.card-face {
+  text-align: center;
+  padding: 8px 0 16px;
+  border-bottom: 1px dashed var(--panel-line);
+  margin-bottom: 16px;
+}
+.card-emoji {
+  font-size: 3.2rem;
+  line-height: 1;
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+.card-face.reversed .card-emoji {
+  transform: rotate(180deg);
+}
+.card-title {
+  font-size: 1.4rem;
+  margin: 12px 0 0;
+}
+.orient {
+  font-size: 0.95rem;
+  color: var(--accent-soft);
+  font-weight: 500;
+}
+
+.your-worry {
+  font-size: 0.85rem;
+  color: var(--ink-faint);
+  font-style: italic;
+  margin: 0 0 12px;
+  text-align: center;
+}
+
+.reading {
+  margin: 0;
+}
+.reading dt {
+  color: var(--accent-soft);
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  margin-top: 14px;
+}
+.reading dd {
+  margin: 4px 0 0;
+  font-size: 1.02rem;
+}
+
+.entertainment-note {
+  font-size: 0.78rem;
+  color: var(--ink-faint);
+  margin: 20px 0 0;
+  padding-top: 12px;
+  border-top: 1px dashed var(--panel-line);
+}
+
+.result-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 18px;
+}
+.secondary-btn {
+  flex: 1;
+  padding: 12px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--ink);
+  background: transparent;
+  border: 1px solid var(--panel-line);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.secondary-btn:hover { background: rgba(255,255,255,0.05); }
+
+.copy-note {
+  font-size: 0.82rem;
+  color: var(--accent-soft);
+  margin: 10px 0 0;
+  text-align: center;
+}
+
+/* 巻き込み */
+.involve {
+  margin: 28px 0 8px;
+  padding: 4px 4px;
+}
+.involve h2 {
+  font-size: 1.15rem;
+  color: var(--accent-soft);
+}
+.involve p {
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+.involve .links {
+  list-style: none;
+  padding: 0;
+  margin: 12px 0;
+}
+.involve .links li { margin: 8px 0; }
+.involve a {
+  color: var(--link);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(158,194,255,0.4);
+}
+.involve a:hover { border-bottom-color: var(--link); }
+.involve a.pending-link {
+  color: var(--ink-faint);
+  border-bottom-style: dashed;
+  cursor: default;
+}
+.vote-note {
+  font-size: 0.82rem;
+  color: var(--ink-faint);
+}
+
+.care-note {
+  background: rgba(244,201,93,0.08);
+  border: 1px solid rgba(244,201,93,0.25);
+  border-radius: 12px;
+  padding: 14px 16px;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  margin: 20px 0;
+}
+
+.site-footer {
+  text-align: center;
+  padding: 24px 20px 48px;
+}
+.site-footer p {
+  font-size: 0.75rem;
+  color: var(--ink-faint);
+  line-height: 1.7;
+}
+
+@media (max-width: 480px) {
+  h1 { font-size: 1.7rem; }
+  .card-panel { padding: 20px 16px; }
+}

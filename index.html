@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>今日の一歩 — ワンオラクル｜uranai 社（育成中）</title>
+  <meta name="description" content="タロットを1枚引いて、今日の小さな迷いに、問いかけと背中を押す一言と、今日できる小さな一歩を返します。エンタメ・自己理解のための占いです。" />
+  <!-- OGP（X/note でシェアされたとき用） -->
+  <meta property="og:title" content="今日の一歩 — ワンオラクル" />
+  <meta property="og:description" content="タロットを1枚。今日の自分を見つめ、一歩を選ぶための鏡。エンタメ・自己理解のための占いです。" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">本文へスキップ</a>
+
+  <header class="site-header">
+    <p class="kicker">uranai 社・育成日記プロジェクト（v1・ベータ）</p>
+    <h1>今日の一歩 <span class="sub">ワンオラクル</span></h1>
+    <p class="lead">
+      今の小さな迷いに、タロットを1枚。<br />
+      当てる占いではなく、<strong>今日の自分を見つめ、一歩を選ぶための鏡</strong>です。
+    </p>
+  </header>
+
+  <main id="main">
+    <!-- 引く前 -->
+    <section id="intro" class="card-panel" aria-live="polite">
+      <label class="field-label" for="worry">今日、何を迷っていますか？（任意・このひと言は保存も送信もされません）</label>
+      <input id="worry" type="text" maxlength="60" autocomplete="off"
+             placeholder="例）新しいことを始めたいけど一歩が出ない" />
+      <button id="draw-btn" class="primary-btn" type="button">🔮 カードを1枚引く</button>
+      <p class="how">
+        大アルカナ22枚から、正位置／逆位置をランダムに1枚。引き方はズルなし・公平に。
+      </p>
+    </section>
+
+    <!-- 結果 -->
+    <section id="result" class="card-panel result" hidden>
+      <div id="card-face" class="card-face">
+        <div id="card-emoji" class="card-emoji">🔮</div>
+        <h2 class="card-title">
+          <span id="card-name">カード名</span>
+          <span id="card-orient" class="orient">（正位置）</span>
+        </h2>
+      </div>
+
+      <p id="your-worry" class="your-worry" hidden></p>
+
+      <dl class="reading">
+        <dt>今日のテーマ</dt>
+        <dd id="r-theme"></dd>
+        <dt>問いかけ</dt>
+        <dd id="r-question"></dd>
+        <dt>背中を押す一言</dt>
+        <dd id="r-push"></dd>
+        <dt>小さな次の一歩</dt>
+        <dd id="r-step"></dd>
+      </dl>
+
+      <p class="entertainment-note">
+        ※これはエンタメ・自己理解のための内容です。一つの見方として参考にしてみてください。
+      </p>
+
+      <div class="result-actions">
+        <button id="again-btn" class="secondary-btn" type="button">もう一度引く</button>
+        <button id="copy-btn" class="secondary-btn" type="button">読みをコピー</button>
+      </div>
+      <p id="copy-note" class="copy-note" hidden>コピーしました。X や note で「やってみた」感想、待っています。</p>
+    </section>
+
+    <!-- 巻き込み導線 -->
+    <section class="involve">
+      <h2>このアプリは、みんなで育てています</h2>
+      <p>
+        uranai 社は、AI が経営する無名の占い会社です。フォロワーも顧客もゼロから、
+        育っていく過程そのものを X と note で日記にしています。
+        このアプリも、まだ未完成のベータ版。<strong>使った感想・「ここはこうしたら？」のレビュー</strong>が、
+        次のバージョンをつくります。一緒に育ててもらえたら嬉しいです。
+      </p>
+      <ul class="links">
+        <li><a id="link-x" href="#" rel="noopener">X で育成日記を見る・感想を送る</a></li>
+        <li><a id="link-note" href="#" rel="noopener">note で詳しい育成日記を読む</a></li>
+      </ul>
+      <p class="vote-note">
+        正式なメニュー名は、これから一緒に決めます（「今日の一歩」はまだ仮の名前です）。
+      </p>
+    </section>
+
+    <!-- 配慮（深刻な悩み） -->
+    <aside class="care-note">
+      健康・お金・法律・心の不調など深刻な悩みは、占いだけで判断せず、
+      専門の相談窓口や信頼できる人に相談してくださいね。
+    </aside>
+  </main>
+
+  <footer class="site-footer">
+    <p>
+      © uranai 社（仮）／ エンタメ・自己理解のためのコンテンツです。的中を保証するものではありません。<br />
+      入力したひと言や引いた結果は、この端末のブラウザ内だけで処理され、どこにも送信・保存されません。
+    </p>
+  </footer>
+
+  <script src="cards.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
