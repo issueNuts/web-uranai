@@ -18,6 +18,13 @@
   // シェア時にカードに載せる、このアプリ自身の公開URL（OGP大カードが出る）。
   var APP_URL = "https://issuenuts.github.io/web-uranai/";
 
+  // アクセス計測（GoatCounter・Cookie不使用）。サイトコードを入れると有効になる（例: "sodateru-uranai"）。
+  // 空のままなら計測スクリプトは一切読み込まれない。
+  // 有効時も送るのは「ページが表示された」「引いた/シェアした回数」だけ。入力したひと言や結果は送らない。
+  var ANALYTICS = {
+    goatcounterCode: ""
+  };
+
   var cards = window.TAROT_CARDS || [];
 
   var els = {
@@ -99,11 +106,13 @@
     // 結果へやさしくスクロール
     els.result.scrollIntoView({ behavior: "smooth", block: "start" });
 
-    // 共有用テキストを保持
-    els.copyBtn.dataset.share = buildShareText(draw);
+    // 共有用テキストを保持（コピーは全文、Xシェアは字数制限内の短文）
+    els.copyBtn.dataset.share = buildCopyText(draw);
+    els.shareXBtn.dataset.share = buildShareText(draw);
   }
 
-  function buildShareText(draw) {
+  // 「読みをコピー」用の全文（字数制限のない場所に貼る想定）
+  function buildCopyText(draw) {
     return [
       "🔮 今日のあなたへ —— " + draw.card.name + "（" + draw.orientLabel + "）",
       "",
@@ -117,12 +126,23 @@
     ].join("\n");
   }
 
+  // Xシェア用の短文。日本語は1文字=2カウントなので、URL(23カウント)込みで
+  // 上限280カウントに収まるよう「カード名＋背中を押す一言」だけに絞る。
+  function buildShareText(draw) {
+    return [
+      "🔮 今日の一歩｜" + draw.card.name + "（" + draw.orientLabel + "）",
+      "「" + draw.reading.push + "」",
+      "#今日の一歩"
+    ].join("\n");
+  }
+
   function onDraw() {
     if (!cards.length) {
       els.intro.textContent = "カードを読み込めませんでした。ページを再読み込みしてみてください。";
       return;
     }
     render(drawOne());
+    trackEvent("event-draw");
   }
 
   function onCopy() {
@@ -155,12 +175,36 @@
 
   // X のシェア画面をひらく（結果テキスト＋このアプリのURL）。投稿するかは本人が決める。
   function onShareX() {
-    var text = els.copyBtn.dataset.share || "";
+    var text = els.shareXBtn.dataset.share || "";
     if (!text) return;
     var url = "https://twitter.com/intent/tweet?text=" +
       encodeURIComponent(text + "\n") + "&url=" + encodeURIComponent(APP_URL);
     window.open(url, "_blank", "noopener");
+    trackEvent("event-share-x");
   }
+
+  // アクセス計測（設定時のみ）。計測している事実はフッターに表示して隠さない。
+  function setupAnalytics() {
+    if (!ANALYTICS.goatcounterCode) return;
+    var s = document.createElement("script");
+    s.async = true;
+    s.src = "https://gc.zgo.at/count.js";
+    s.setAttribute("data-goatcounter",
+      "https://" + ANALYTICS.goatcounterCode + ".goatcounter.com/count");
+    document.body.appendChild(s);
+    var note = document.getElementById("analytics-note");
+    if (note) note.hidden = false;
+  }
+
+  // 匿名の回数イベント（引いた/シェアした）。内容は一切送らない。
+  function trackEvent(name) {
+    if (!ANALYTICS.goatcounterCode) return;
+    if (window.goatcounter && window.goatcounter.count) {
+      window.goatcounter.count({ path: name, title: name, event: true });
+    }
+  }
+
+  setupAnalytics();
 
   els.drawBtn.addEventListener("click", onDraw);
   els.againBtn.addEventListener("click", onDraw);
