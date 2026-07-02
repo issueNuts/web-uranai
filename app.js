@@ -22,7 +22,7 @@
   // 空のままなら計測スクリプトは一切読み込まれない。
   // 有効時も送るのは「ページが表示された」「引いた/シェアした回数」だけ。入力したひと言や結果は送らない。
   var ANALYTICS = {
-    goatcounterCode: ""
+    goatcounterCode: "sodateruuranai"  // https://sodateruuranai.goatcounter.com
   };
 
   var cards = window.TAROT_CARDS || [];
