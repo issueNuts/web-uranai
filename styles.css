@@ -11,7 +11,6 @@
   --ink-faint: #8a90c4;
   --accent: #f4c95d;      /* 星の金 */
   --accent-soft: #f7dd9a;
-  --link: #9ec2ff;
   --radius: 16px;
   --maxw: 640px;
 }
@@ -257,23 +256,6 @@ h1 .sub {
 .involve p {
   color: var(--ink-soft);
   font-size: 0.95rem;
-}
-.involve .links {
-  list-style: none;
-  padding: 0;
-  margin: 12px 0;
-}
-.involve .links li { margin: 8px 0; }
-.involve a {
-  color: var(--link);
-  text-decoration: none;
-  border-bottom: 1px solid rgba(158,194,255,0.4);
-}
-.involve a:hover { border-bottom-color: var(--link); }
-.involve a.pending-link {
-  color: var(--ink-faint);
-  border-bottom-style: dashed;
-  cursor: default;
 }
 .vote-note {
   font-size: 0.82rem;

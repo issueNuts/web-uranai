@@ -8,13 +8,6 @@
 (function () {
   "use strict";
 
-  // X / note の育成日記リンク。開設したらここに URL を入れる。
-  // 空のままなら、デッドリンクにせず「（準備中）」と表示する。
-  var SITE_LINKS = {
-    x: "https://x.com/sodateru_uranai",  // 育成日記アカウント（仮・#0005）
-    note: ""   // 例: "https://note.com/＜アカウント＞"
-  };
-
   // シェア時にカードに載せる、このアプリ自身の公開URL（OGP大カードが出る）。
   var APP_URL = "https://issuenuts.github.io/web-uranai/";
 
@@ -44,26 +37,8 @@
     againBtn: document.getElementById("again-btn"),
     shareXBtn: document.getElementById("share-x-btn"),
     copyBtn: document.getElementById("copy-btn"),
-    copyNote: document.getElementById("copy-note"),
-    linkX: document.getElementById("link-x"),
-    linkNote: document.getElementById("link-note")
+    copyNote: document.getElementById("copy-note")
   };
-
-  // 育成日記リンクを反映。URL 未設定ならデッドリンクにせず「準備中」にする。
-  function applyLink(el, url, openLabel) {
-    if (!el) return;
-    if (url) {
-      el.setAttribute("href", url);
-      el.setAttribute("target", "_blank");
-      el.textContent = openLabel;
-    } else {
-      el.removeAttribute("href");
-      el.classList.add("pending-link");
-      el.textContent = openLabel + "（準備中）";
-    }
-  }
-  applyLink(els.linkX, SITE_LINKS.x, "X で育成日記を見る・感想を送る");
-  applyLink(els.linkNote, SITE_LINKS.note, "note で詳しい育成日記を読む");
 
   // 公平な1枚引き: カード番号と正逆を乱数で選ぶ
   function drawOne() {
